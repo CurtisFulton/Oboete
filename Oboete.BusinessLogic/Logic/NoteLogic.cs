@@ -1,8 +1,8 @@
 using Oboete.Database.Entity;
 
-namespace Oboete.BusinessLogic.ViewModel
+namespace Oboete.Logic
 {
-    public class NoteViewModel : BaseViewModel<Note>
+    public class NoteLogic : LogicBase<Note>
     {
         #region Private Properties
         

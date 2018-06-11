@@ -1,9 +1,9 @@
 using Oboete.Database.Entity;
 using System;
 
-namespace Oboete.BusinessLogic.ViewModel
+namespace Oboete.Logic
 {
-    public class FlashcardViewModel : BaseViewModel<Flashcard>
+    public class FlashcardLogic : LogicBase<Flashcard>
     {
         #region Private Properties
 
@@ -50,8 +50,8 @@ namespace Oboete.BusinessLogic.ViewModel
 
         #region Constructors 
 
-        public FlashcardViewModel() : base() { }
-        public FlashcardViewModel(Flashcard entity) : base(entity) { }
+        public FlashcardLogic() : base() { }
+        public FlashcardLogic(Flashcard entity) : base(entity) { }
 
         #endregion
 

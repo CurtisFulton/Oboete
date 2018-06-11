@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Oboete.BusinessLogic\Oboete.BusinessLogic.csproj" />
+    <Folder Include="wwwroot\Documents\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Documents\" />
+    <ProjectReference Include="..\Oboete.BusinessLogic\Oboete.Logic.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,19 +1,19 @@
 using System.Runtime.Serialization;
 using Oboete.Database.Entity;
 
-namespace Oboete.BusinessLogic.ViewModel
+namespace Oboete.Logic
 {
-    public partial class BaseViewModel<T>
+    public partial class LogicBase<T>
         where T : BaseEntity, new()
     {
         public T Entity { get; protected set; }
 
-        public BaseViewModel()
+        public LogicBase()
         {
             Entity = new T();
         }
 
-        public BaseViewModel(T entity)
+        public LogicBase(T entity)
         {
             Entity = entity;
         }
