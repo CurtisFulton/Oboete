@@ -1,4 +1,4 @@
-﻿namespace Oboete.Database
+﻿namespace Oboete.BusinessLogic
 {
     public enum AnswerGrade
     {

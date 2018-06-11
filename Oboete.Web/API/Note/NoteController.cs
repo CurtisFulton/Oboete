@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Oboete.Database;
-using Oboete.Database.Model;
 using Oboete.Database.Entity;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Oboete.Web.API
 {
@@ -20,13 +20,13 @@ namespace Oboete.Web.API
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<NoteEntity>>> Get()
+        public async Task<ActionResult<List<Note>>> Get()
         {
             return await Task.Run(() => DataToken.Notes.ToList());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<NoteEntity>> Get(int id)
+        public async Task<ActionResult<Note>> Get(int id)
         {
             var note = await DataToken.Notes.FindAsync(id);
 
@@ -37,7 +37,7 @@ namespace Oboete.Web.API
         }
 
         [HttpPost]
-        public async Task<ActionResult<NoteEntity>> AddNote(NoteEntity note)
+        public async Task<ActionResult<Note>> AddNote([FromBody] Note note)
         {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
@@ -50,7 +50,7 @@ namespace Oboete.Web.API
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<NoteEntity>> UpdateNote(int id, NoteEntity item)
+        public async Task<ActionResult<Note>> UpdateNote(int id, Note item)
         {
             var note = await DataToken.Notes.FindAsync(id);
             item.NoteId = id;
@@ -65,7 +65,7 @@ namespace Oboete.Web.API
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<NoteEntity>> DeleteNote(int id)
+        public async Task<ActionResult<Note>> DeleteNote(int id)
         {
             var note = await DataToken.Notes.FindAsync(id);
 
@@ -76,6 +76,20 @@ namespace Oboete.Web.API
             await DataToken.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<Note>> PatchNote(int id, [FromBody] JsonPatchDocument notePatch)
+        {
+            var note = await DataToken.Notes.FindAsync(id);
+
+            if (note == null)
+                return NotFound();
+
+            notePatch.ApplyTo(note);
+            await DataToken.SaveChangesAsync();
+
+            return Ok(note);
         }
     }
 }

@@ -10,8 +10,13 @@ namespace Oboete.Database
     {
         public OboeteContext (DbContextOptions<OboeteContext> options) : base(options) { }
 
-        public DbSet<NoteEntity> Notes { get; set; }
-        public DbSet<FlashcardEntity> Flashcards { get; set; }
+        public DbSet<Note> Notes { get; set; }
+        public DbSet<NoteType> NoteTypes { get; set; }
+
+        public DbSet<Flashcard> Flashcards { get; set; }
+        public DbSet<FlashcardType> FlashCardTypes { get; set; }
+
+        public DbSet<Document> Documents { get; set; }
 
         public override int SaveChanges()
         {
@@ -32,6 +37,25 @@ namespace Oboete.Database
             foreach (var entity in entities) {
                 ((BaseEntity)entity.Entity).ModifiedDateTime = DateTimeOffset.UtcNow;
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FlashcardType>().HasData(
+                new FlashcardType() { FlashcardTypeId = 1, FlashcardTypeName = "Kana Recognition" },
+                new FlashcardType() { FlashcardTypeId = 2, FlashcardTypeName = "Kana Production" }
+            );
+
+            modelBuilder.Entity<NoteType>().HasData(
+                new NoteType() { NoteTypeId = 1, NoteTypeName = "Vocab" },
+                new NoteType() { NoteTypeId = 2, NoteTypeName = "Grammar" }
+            );
+
+            modelBuilder.Entity<Document>().HasData(
+                new Document() { DocumentId = 1, FileName = "TestDocument.txt" }
+            );
+
+            // TODO: Indexes??
         }
     }
 }

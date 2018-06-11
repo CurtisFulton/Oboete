@@ -9,9 +9,11 @@ namespace Oboete.Web.API
 {
     public partial class NoteController : Controller
     {
-        [HttpPost("{id}/DoSomething")]
-        public ActionResult AddNote(int id)
+        [HttpPost("{id}/CreateFlashcards")]
+        public ActionResult CreateFlashcards(int id)
         {
+
+
             return Ok("I did something");
         }
     }

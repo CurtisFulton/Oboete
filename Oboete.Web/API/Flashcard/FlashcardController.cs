@@ -19,13 +19,13 @@ namespace Oboete.Web.API
         public FlashcardController(OboeteContext dataToken) => DataToken = dataToken;
 
         [HttpGet]
-        public async Task<ActionResult<List<FlashcardEntity>>> Get()
+        public async Task<ActionResult<List<Flashcard>>> Get()
         {
             return await Task.Run(() => DataToken.Flashcards.ToList());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<FlashcardEntity>> Get(int id)
+        public async Task<ActionResult<Flashcard>> Get(int id)
         {
             var flashcard = await DataToken.Flashcards.FindAsync(id);
 
@@ -36,7 +36,7 @@ namespace Oboete.Web.API
         }
 
         [HttpPost]
-        public async Task<ActionResult<FlashcardEntity>> AddFlashcard(FlashcardEntity flashcard)
+        public async Task<ActionResult<Flashcard>> AddFlashcard([FromBody] Flashcard flashcard)
         {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
@@ -52,7 +52,7 @@ namespace Oboete.Web.API
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<FlashcardEntity>> UpdateNote(int id, FlashcardEntity item)
+        public async Task<ActionResult<Flashcard>> UpdateNote(int id, Flashcard item)
         {
             var flashcard = await DataToken.Flashcards.FindAsync(id);
             item.FlashCardId = id;
@@ -67,7 +67,7 @@ namespace Oboete.Web.API
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<FlashcardEntity>> DeleteNote(int id)
+        public async Task<ActionResult<Flashcard>> DeleteNote(int id)
         {
             var flashcard = await DataToken.Flashcards.FindAsync(id);
 

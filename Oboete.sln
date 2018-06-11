@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Database", "Oboete.Database\Oboete.Database.csproj", "{AF5A92F3-E6ED-4F27-9273-F2F5B443F5A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationProject", "MigrationProject\MigrationProject.csproj", "{9FD1DF30-F520-4C05-B7DD-E516EDC92FA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationProject", "MigrationProject\MigrationProject.csproj", "{9FD1DF30-F520-4C05-B7DD-E516EDC92FA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oboete.Web", "Oboete.Web\Oboete.Web.csproj", "{D6B98499-38D1-4BB0-B852-58EAD2D9CA30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Web", "Oboete.Web\Oboete.Web.csproj", "{D6B98499-38D1-4BB0-B852-58EAD2D9CA30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oboete.BusinessLogic", "Oboete.BusinessLogic\Oboete.BusinessLogic.csproj", "{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D6B98499-38D1-4BB0-B852-58EAD2D9CA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6B98499-38D1-4BB0-B852-58EAD2D9CA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6B98499-38D1-4BB0-B852-58EAD2D9CA30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
