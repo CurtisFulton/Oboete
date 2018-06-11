@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Oboete.BusinessLogic\Oboete.Logic.csproj" />
+    <ProjectReference Include="..\Oboete.Logic\Oboete.Logic.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationProject", "Migrati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Web", "Oboete.Web\Oboete.Web.csproj", "{D6B98499-38D1-4BB0-B852-58EAD2D9CA30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oboete.Logic", "Oboete.BusinessLogic\Oboete.Logic.csproj", "{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oboete.Logic", "Oboete.Logic\Oboete.Logic.csproj", "{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
