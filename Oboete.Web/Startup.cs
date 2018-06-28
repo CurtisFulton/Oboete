@@ -25,6 +25,8 @@ namespace Oboete.Web
                 .AddJsonOptions(options => 
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
+
+            Logic.Config.ConnectionString = Configuration.GetConnectionString("OboeteDB");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

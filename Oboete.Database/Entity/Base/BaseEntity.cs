@@ -13,7 +13,7 @@ namespace Oboete.Database.Entity
         public event PropertyChangedEventHandler PropertyChanged;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTimeOffset CreateDateTime { get; private set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset CreatedDateTime { get; private set; } = DateTimeOffset.UtcNow;
         public DateTimeOffset ModifiedDateTime { get; set; } = DateTimeOffset.UtcNow;
         
         public void OnPropertyChanged(string propertyName) => PropertyChanged(this, new PropertyChangedEventArgs(propertyName));

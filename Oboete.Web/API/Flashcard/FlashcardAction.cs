@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Oboete.Logic;
-using Oboete.Database.Entity;
 
 namespace Oboete.Web.API
 {
@@ -21,11 +20,10 @@ namespace Oboete.Web.API
             if (grade == null || grade < 0 || grade > 5)
                 return BadRequest($"To review a card you must supply a url parameter '{nameof(grade)}' between 0 and 5");
             
-            FlashcardLogic flashcard = new FlashcardLogic(await DataToken.Flashcards.FindAsync(id));
+            FlashcardAction flashcard = new FlashcardAction(id);
 
-            flashcard.ReviewCard((int)grade);
+            await flashcard.ReviewCardAsync((int)grade);
 
-            await DataToken.SaveChangesAsync();
             return Ok(flashcard);
         }
     }

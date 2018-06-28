@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationProject", "Migrati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Web", "Oboete.Web\Oboete.Web.csproj", "{D6B98499-38D1-4BB0-B852-58EAD2D9CA30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oboete.Logic", "Oboete.Logic\Oboete.Logic.csproj", "{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Logic", "Oboete.Logic\Oboete.Logic.csproj", "{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Sandbox", "Oboete.Sandbox\Oboete.Sandbox.csproj", "{0376D0E7-32B6-4D89-B47F-C527CDF5109F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Core", "Oboete.Core\Oboete.Core.csproj", "{D40FF2A1-617D-4492-BB90-369A60508C31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DC14CD9-F356-4E51-A944-37AF25CDEC0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0376D0E7-32B6-4D89-B47F-C527CDF5109F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0376D0E7-32B6-4D89-B47F-C527CDF5109F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0376D0E7-32B6-4D89-B47F-C527CDF5109F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0376D0E7-32B6-4D89-B47F-C527CDF5109F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40FF2A1-617D-4492-BB90-369A60508C31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40FF2A1-617D-4492-BB90-369A60508C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40FF2A1-617D-4492-BB90-369A60508C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40FF2A1-617D-4492-BB90-369A60508C31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

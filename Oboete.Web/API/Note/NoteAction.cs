@@ -12,8 +12,6 @@ namespace Oboete.Web.API
         [HttpPost("{id}/CreateFlashcards")]
         public ActionResult CreateFlashcards(int id)
         {
-
-
             return Ok("I did something");
         }
     }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Oboete.Database;
 using Oboete.Database.Entity;
+using Oboete.Logic;
 
 namespace Oboete.Web.API
 {
@@ -19,15 +21,15 @@ namespace Oboete.Web.API
         public FlashcardController(OboeteContext dataToken) => DataToken = dataToken;
 
         [HttpGet]
-        public async Task<ActionResult<List<Flashcard>>> Get()
+        public async Task<ActionResult<IQueryable<FlashcardAction>>> Get()
         {
-            return await Task.Run(() => DataToken.Flashcards.ToList());
+            return Ok(await FlashcardAction.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Flashcard>> Get(int id)
+        public ActionResult<FlashcardAction> Get(int id)
         {
-            var flashcard = await DataToken.Flashcards.FindAsync(id);
+            var flashcard = new FlashcardAction(id);
 
             if (flashcard == null)
                 return NotFound();
@@ -36,48 +38,65 @@ namespace Oboete.Web.API
         }
 
         [HttpPost]
-        public async Task<ActionResult<Flashcard>> AddFlashcard([FromBody] Flashcard flashcard)
+        public async Task<ActionResult<Flashcard>> AddFlashcard([FromBody] Flashcard entity)
+        {
+            //if (!ModelState.IsValid) {
+            //    return BadRequest(ModelState);
+            //}
+
+            //var flashcardNote = new NoteLogic(entity.NoteId);
+
+            //if (flashcardNote == null)
+            //    return StatusCode(422, "Note specified by the NoteID does not exist");
+
+            //var flashcard = new FlashcardLogic(entity);
+            //await flashcard.AddToDb();
+
+            //return Created($"/api/Note/{entity.FlashCardId}", entity);
+            return null;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteNote(int id)
+        {
+            var flashcard = new FlashcardAction(id);
+
+            if (flashcard == null)
+                return NotFound();
+
+            await flashcard.RemoveFromDb();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<FlashcardAction>> UpdateFlashcard(int id, [FromBody] FlashcardAction item)
         {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            if (await DataToken.Notes.FindAsync(flashcard.NoteId) == null)
-                return StatusCode(422, "Note specified by the NoteID does not exist");
+            var flashcard = new FlashcardAction(id);
 
-            await Task.Run(() => DataToken.Flashcards.Add(flashcard));
-            await DataToken.SaveChangesAsync();
-
-            return Created($"/api/Note/{flashcard.FlashCardId}", flashcard);
+            if (await flashcard.UpdateEntity(item)) {
+                return Ok(flashcard);
+            } else {
+                return BadRequest();
+            }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Flashcard>> UpdateNote(int id, Flashcard item)
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<NoteAction>> PatchFlashcard(int id, [FromBody] JsonPatchDocument flashcardPatch)
         {
-            var flashcard = await DataToken.Flashcards.FindAsync(id);
-            item.FlashCardId = id;
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
 
-            if (flashcard == null)
-                return NotFound();
-            
-            await Task.Run(() => DataToken.Entry(flashcard).CurrentValues.SetValues(item));
-            await DataToken.SaveChangesAsync();
+            var flashcard = new NoteAction(id);
+
+            await flashcard.PatchEntity(flashcardPatch);
 
             return Ok(flashcard);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Flashcard>> DeleteNote(int id)
-        {
-            var flashcard = await DataToken.Flashcards.FindAsync(id);
-
-            if (flashcard == null)
-                return NotFound();
-
-            await Task.Run(() => DataToken.Flashcards.Remove(flashcard));
-            await DataToken.SaveChangesAsync();
-
-            return NoContent();
         }
     }
 }
