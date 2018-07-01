@@ -62,12 +62,12 @@ namespace Oboete.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
+                    template: "{controller=Vue}/{action=Index}"
                 );
                 
                 routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" }
+                    name: "SPA-Fallback",
+                    defaults: new { controller = "Vue", action = "Index" }
                 );
             });
 
