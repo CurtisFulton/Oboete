@@ -15,7 +15,7 @@ namespace Oboete.Database.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -33,15 +33,19 @@ namespace Oboete.Database.Migrations
 
                     b.Property<DateTimeOffset>("ModifiedDateTime");
 
+                    b.Property<int>("OboeteUserID");
+
                     b.HasKey("DeckID");
 
                     b.HasIndex("DeckName")
                         .IsUnique();
 
+                    b.HasIndex("OboeteUserID");
+
                     b.ToTable("Deck");
 
                     b.HasData(
-                        new { DeckID = 1, CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 28, 11, 50, 0, 811, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), DeckName = "Default Deck", ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 28, 11, 50, 0, 811, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) }
+                        new { DeckID = 1, CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 288, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), DeckName = "Default Deck", ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 288, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), OboeteUserID = 1 }
                     );
                 });
 
@@ -107,7 +111,7 @@ namespace Oboete.Database.Migrations
                     b.ToTable("FlashcardTemplate");
 
                     b.HasData(
-                        new { FlashcardTemplateID = 1, CardBackTemplate = "{{Back}}", CardFrontTemplate = "{{Front}}", CardStyling = "", CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 28, 11, 50, 0, 815, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), FlashcardTemplateName = "Default Flashcard", ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 28, 11, 50, 0, 815, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), NoteTypeID = 1 }
+                        new { FlashcardTemplateID = 1, CardBackTemplate = "{{Back}}", CardFrontTemplate = "{{Front}}", CardStyling = "", CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 289, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), FlashcardTemplateName = "Default Flashcard", ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 289, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), NoteTypeID = 1 }
                     );
                 });
 
@@ -135,6 +139,32 @@ namespace Oboete.Database.Migrations
                     b.ToTable("Note");
                 });
 
+            modelBuilder.Entity("Oboete.Database.Entity.NoteFieldValue", b =>
+                {
+                    b.Property<int>("NoteFieldValueId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("CreatedDateTime")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("ModifiedDateTime");
+
+                    b.Property<int>("NoteId");
+
+                    b.Property<int>("NoteTypeFieldDefinitionId");
+
+                    b.Property<string>("NoteValue");
+
+                    b.HasKey("NoteFieldValueId");
+
+                    b.HasIndex("NoteId");
+
+                    b.HasIndex("NoteTypeFieldDefinitionId");
+
+                    b.ToTable("NoteFieldValue");
+                });
+
             modelBuilder.Entity("Oboete.Database.Entity.NoteType", b =>
                 {
                     b.Property<int>("NoteTypeID")
@@ -144,15 +174,19 @@ namespace Oboete.Database.Migrations
                     b.Property<string>("NoteTypeName")
                         .IsRequired();
 
+                    b.Property<int>("OboeteUserID");
+
                     b.HasKey("NoteTypeID");
 
                     b.HasIndex("NoteTypeName")
                         .IsUnique();
 
+                    b.HasIndex("OboeteUserID");
+
                     b.ToTable("NoteType");
 
                     b.HasData(
-                        new { NoteTypeID = 1, NoteTypeName = "Default Note" }
+                        new { NoteTypeID = 1, NoteTypeName = "Default Note", OboeteUserID = 1 }
                     );
                 });
 
@@ -188,35 +222,79 @@ namespace Oboete.Database.Migrations
                     b.ToTable("NoteTypeFieldDefinition");
 
                     b.HasData(
-                        new { NoteTypeFieldDefinitionID = 1, CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 28, 11, 50, 0, 814, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 28, 11, 50, 0, 814, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), NoteFieldDisplay = "Front", NoteFieldName = "Front", NoteTypeID = 1, SequenceID = 1 },
-                        new { NoteTypeFieldDefinitionID = 2, CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 28, 11, 50, 0, 814, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 28, 11, 50, 0, 814, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), NoteFieldDisplay = "Back", NoteFieldName = "Back", NoteTypeID = 1, SequenceID = 2 }
+                        new { NoteTypeFieldDefinitionID = 1, CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 289, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 289, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), NoteFieldDisplay = "Front", NoteFieldName = "Front", NoteTypeID = 1, SequenceID = 1 },
+                        new { NoteTypeFieldDefinitionID = 2, CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 289, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 289, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), NoteFieldDisplay = "Back", NoteFieldName = "Back", NoteTypeID = 1, SequenceID = 2 }
                     );
                 });
 
-            modelBuilder.Entity("Oboete.Database.Entity.NoteTypeFieldValue", b =>
+            modelBuilder.Entity("Oboete.Database.Entity.OboeteUser", b =>
                 {
-                    b.Property<int>("NoteTypeFieldValueId")
+                    b.Property<int>("OboeteUserID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTimeOffset>("CreatedDateTime")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("IsEmailConfirmed");
+
+                    b.Property<DateTimeOffset?>("LockoutEndDateTime");
+
+                    b.Property<int>("LoginFailedCount");
+
                     b.Property<DateTimeOffset>("ModifiedDateTime");
 
-                    b.Property<int>("NoteId");
+                    b.Property<string>("PasswordHash")
+                        .IsRequired();
 
-                    b.Property<int>("NoteTypeFieldDefinitionId");
+                    b.Property<Guid>("SecurityStamp");
 
-                    b.Property<string>("NoteValue");
+                    b.Property<string>("UserName")
+                        .IsRequired();
 
-                    b.HasKey("NoteTypeFieldValueId");
+                    b.HasKey("OboeteUserID");
 
-                    b.HasIndex("NoteId");
+                    b.ToTable("OboeteUser");
 
-                    b.HasIndex("NoteTypeFieldDefinitionId");
+                    b.HasData(
+                        new { OboeteUserID = 1, CreatedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 286, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), Email = "Curtis.R.Fulton@Gmail.com", IsEmailConfirmed = false, LoginFailedCount = 0, ModifiedDateTime = new DateTimeOffset(new DateTime(2018, 6, 30, 13, 9, 8, 286, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), PasswordHash = "$2y$12$nu0WVC4LHuf1kbAKTNQQ8ueIQmW5dWEXhatBPz5xvPvVzpJx6Qmm2", SecurityStamp = new Guid("f98a09ce-ff28-4d21-853b-a9dc83f2f7c8"), UserName = "Temp User" }
+                    );
+                });
 
-                    b.ToTable("NoteTypeFieldValue");
+            modelBuilder.Entity("Oboete.Database.Entity.OboeteUserLoginToken", b =>
+                {
+                    b.Property<int>("OboeteUserLoginTokenID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("CreatedDateTime")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("Expires");
+
+                    b.Property<Guid>("LoginSelector");
+
+                    b.Property<DateTimeOffset>("ModifiedDateTime");
+
+                    b.Property<int>("OboeteUserID");
+
+                    b.Property<string>("TokenHash");
+
+                    b.HasKey("OboeteUserLoginTokenID");
+
+                    b.HasIndex("OboeteUserID");
+
+                    b.ToTable("OboeteUserLoginToken");
+                });
+
+            modelBuilder.Entity("Oboete.Database.Entity.Deck", b =>
+                {
+                    b.HasOne("Oboete.Database.Entity.OboeteUser", "OboeteUser")
+                        .WithMany()
+                        .HasForeignKey("OboeteUserID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Oboete.Database.Entity.Flashcard", b =>
@@ -253,15 +331,7 @@ namespace Oboete.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Oboete.Database.Entity.NoteTypeFieldDefinition", b =>
-                {
-                    b.HasOne("Oboete.Database.Entity.NoteType", "NoteType")
-                        .WithMany("NoteFields")
-                        .HasForeignKey("NoteTypeID")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("Oboete.Database.Entity.NoteTypeFieldValue", b =>
+            modelBuilder.Entity("Oboete.Database.Entity.NoteFieldValue", b =>
                 {
                     b.HasOne("Oboete.Database.Entity.Note", "Note")
                         .WithMany("NoteValues")
@@ -271,6 +341,30 @@ namespace Oboete.Database.Migrations
                     b.HasOne("Oboete.Database.Entity.NoteTypeFieldDefinition", "NoteTypeFieldDefinition")
                         .WithMany()
                         .HasForeignKey("NoteTypeFieldDefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Oboete.Database.Entity.NoteType", b =>
+                {
+                    b.HasOne("Oboete.Database.Entity.OboeteUser", "OboeteUser")
+                        .WithMany()
+                        .HasForeignKey("OboeteUserID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Oboete.Database.Entity.NoteTypeFieldDefinition", b =>
+                {
+                    b.HasOne("Oboete.Database.Entity.NoteType", "NoteType")
+                        .WithMany("NoteFields")
+                        .HasForeignKey("NoteTypeID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Oboete.Database.Entity.OboeteUserLoginToken", b =>
+                {
+                    b.HasOne("Oboete.Database.Entity.OboeteUser", "OboeteUser")
+                        .WithMany()
+                        .HasForeignKey("OboeteUserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

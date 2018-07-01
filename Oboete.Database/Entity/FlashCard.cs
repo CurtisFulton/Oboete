@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace Oboete.Database.Entity
 {
@@ -7,7 +8,7 @@ namespace Oboete.Database.Entity
     public class Flashcard : BaseEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int FlashCardID { get; private set; }
+        public int FlashcardID { get; private set; }
         public int FlashcardTemplateID { get; private set; }
         public int NoteID { get; private set; }
 
@@ -16,16 +17,17 @@ namespace Oboete.Database.Entity
         public DateTimeOffset NextReviewDateTime { get; private set; } = DateTimeOffset.UtcNow;
         public DateTimeOffset LastReviewDateTime { get; private set; } = DateTimeOffset.UtcNow;
 
-        public Note Note { get; private set; }
-        public FlashcardTemplate FlashcardTemplate { get; private set; }
+        [JsonIgnore] public Note Note { get; private set; }
+        [JsonIgnore] public FlashcardTemplate FlashcardTemplate { get; private set; }
 
         #region Constructor
 
         private Flashcard() { }
-        internal Flashcard(int flashcardTemplateID, int noteID = 0)
+        internal Flashcard(int flashcardTemplateID, int noteID = 0, int flashcardID = 0)
         {
             NoteID = noteID;
             FlashcardTemplateID = flashcardTemplateID;
+            FlashcardID = flashcardID;
         }
 
         #endregion

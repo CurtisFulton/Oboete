@@ -10,7 +10,7 @@ namespace Oboete.Database
         {
             var builder = new DbContextOptionsBuilder<OboeteContext>();
 
-            builder.UseSqlServer(@"Server=LocalHost\SQLEXPRESS;Database=Migrations;Trusted_Connection=True;MultipleActiveResultSets=True");
+            builder.UseSqlServer(@"Server=LocalHost\SQLEXPRESS;Database=OboeteDB;Trusted_Connection=True;MultipleActiveResultSets=True");
 
             return new OboeteContext(builder.Options);
         }

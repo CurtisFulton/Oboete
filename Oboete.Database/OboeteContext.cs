@@ -10,19 +10,22 @@ namespace Oboete.Database
     {
         #region Db Tables
 
-        public DbSet<Deck> Decks { get; set; }
+        public DbSet<Deck> Decks { get; private set; }
 
-        public DbSet<Note> Notes { get; set; }
-        public DbSet<NoteType> NoteTypes { get; set; }
+        public DbSet<Note> Notes { get; private set; }
+        public DbSet<NoteType> NoteTypes { get; private set; }
 
-        public DbSet<NoteTypeFieldDefinition> NoteTypeFieldDefinitions { get; set; }
-        public DbSet<NoteTypeFieldValue> NoteTypeFieldValues { get; set; }
+        public DbSet<NoteTypeFieldDefinition> NoteTypeFieldDefinitions { get; private set; }
+        public DbSet<NoteFieldValue> NoteTypeFieldValues { get; private set; }
 
-        public DbSet<Flashcard> Flashcards { get; set; }
-        public DbSet<FlashcardTemplate> FlashCardTemplates { get; set; }
+        public DbSet<Flashcard> Flashcards { get; private set; }
+        public DbSet<FlashcardTemplate> FlashCardTemplates { get; private set; }
 
-        #endregion  
+        public DbSet<OboeteUser> OboeteUsers { get; private set; }
+        public DbSet<OboeteUserLoginToken> OboeteUserLoginTokens { get; private set; }
 
+        #endregion
+        
         public OboeteContext (DbContextOptions<OboeteContext> options) : base(options) { }
         public OboeteContext(string connectionString) : base(GetOptions(connectionString)) { }
         
@@ -59,6 +62,7 @@ namespace Oboete.Database
             SetUpIndexes(modelBuilder);
 
             SeedValues(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
         private void SetUpDeleteBehaviours(ModelBuilder modelBuilder)
@@ -73,6 +77,7 @@ namespace Oboete.Database
                         .HasMany(p => p.FlashcardTemplates)
                         .WithOne(p => p.NoteType)
                         .OnDelete(DeleteBehavior.Restrict);
+            
         }
 
         private void SetUpAggregationNavigationProperties(ModelBuilder modelBuilder)
@@ -121,12 +126,16 @@ namespace Oboete.Database
 
         private void SeedValues(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OboeteUser>().HasData(
+                new OboeteUser("Temp User", "$2y$12$nu0WVC4LHuf1kbAKTNQQ8ueIQmW5dWEXhatBPz5xvPvVzpJx6Qmm2", "Curtis.R.Fulton@Gmail.com", 1)
+            );
+
             modelBuilder.Entity<Deck>().HasData(
-                new Deck("Default Deck", 1)
+                new Deck("Default Deck", 1, 1)
             );
 
             modelBuilder.Entity<NoteType>().HasData(
-                new NoteType("Default Note", 1)
+                new NoteType("Default Note", 1, 1)
             );
 
             modelBuilder.Entity<NoteTypeFieldDefinition>().HasData(

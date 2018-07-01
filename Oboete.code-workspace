@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "Oboete.Web"
+		},
+		{
+			"path": "Oboete.Database"
+		},
+		{
+			"path": "Oboete.Logic"
+		},
+		{
+			"path": "Oboete.Core"
+		},
+		{
+			"path": "Oboete.Test"
+		}
+	],
+	"settings": {}
+}

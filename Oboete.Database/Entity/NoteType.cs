@@ -11,9 +11,12 @@ namespace Oboete.Database.Entity
     public class NoteType : TypeEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int NoteTypeID { get; set; }
+        public int NoteTypeID { get; private set; }
         [Required]
-        public string NoteTypeName { get; set; }
+        public string NoteTypeName { get; private set; }
+        public int OboeteUserID { get; private set; }
+
+        public OboeteUser OboeteUser { get; private set; }
 
         private ICollection<NoteTypeFieldDefinition> _noteFields;
         public IEnumerable<NoteTypeFieldDefinition> NoteFields => _noteFields;
@@ -24,13 +27,14 @@ namespace Oboete.Database.Entity
         #region Constructors
 
         private NoteType() { }
-        public NoteType(string noteTypeName, int noteTypeID = 0)
+        public NoteType(string noteTypeName, int userID, int noteTypeID = 0)
         {
             if (string.IsNullOrWhiteSpace(noteTypeName))
                 throw new ArgumentNullException(nameof(noteTypeName), $"'{nameof(NoteTypeName)}' cannot be Null or white space");
 
             NoteTypeName = noteTypeName;
             NoteTypeID = noteTypeID;
+            OboeteUserID = userID;
 
             _noteFields = new List<NoteTypeFieldDefinition>();
             _flashcardTemplates = new List<FlashcardTemplate>();

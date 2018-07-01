@@ -13,6 +13,9 @@ namespace Oboete.Database.Entity
         public int DeckID { get; set; }
         [Required]
         public string DeckName { get; set; }
+        public int OboeteUserID { get; private set; }
+
+        public OboeteUser OboeteUser { get; private set; }
 
         private ICollection<Note> _notes;
         public IEnumerable<Note> Notes => _notes;
@@ -20,13 +23,14 @@ namespace Oboete.Database.Entity
         #region Constructors
 
         private Deck() { }
-        public Deck(string deckName, int deckID = 0)
+        public Deck(string deckName, int oboeteUserID, int deckID = 0)
         {
             if (string.IsNullOrWhiteSpace(deckName))
                 throw new ArgumentNullException(nameof(deckName), $"'{nameof(DeckName)}' cannot be Null or white space");
 
             DeckName = deckName;
             DeckID = deckID;
+            OboeteUserID = oboeteUserID;
 
             _notes = new List<Note>();
         }

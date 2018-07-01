@@ -18,8 +18,8 @@ namespace Oboete.Database.Entity
         public Deck Deck { get; private set; }
         public NoteType NoteType { get; private set; }
 
-        private ICollection<NoteTypeFieldValue> _noteValues;
-        public IEnumerable<NoteTypeFieldValue> NoteValues => _noteValues;
+        private ICollection<NoteFieldValue> _noteValues;
+        public IEnumerable<NoteFieldValue> NoteValues => _noteValues;
         
         private ICollection<Flashcard> _flashcards;
         public IEnumerable<Flashcard> Flashcards => _flashcards;
@@ -32,7 +32,7 @@ namespace Oboete.Database.Entity
             DeckID = deckID;
             NoteTypeID = noteTypeID;
 
-            _noteValues = new List<NoteTypeFieldValue>();
+            _noteValues = new List<NoteFieldValue>();
             _flashcards = new List<Flashcard>();
         }
 
@@ -40,17 +40,17 @@ namespace Oboete.Database.Entity
 
         #region Public Accessors
 
-        public NoteTypeFieldValue AddNoteValue(int noteTypeFieldDefinitionId, string noteValue, DbContext context = null)
+        public NoteFieldValue AddValue(int noteTypeFieldDefinitionId, string noteValue, DbContext context = null)
         {
-            NoteTypeFieldValue newValue;
+            NoteFieldValue newValue;
 
             if (_noteValues != null) {
-                newValue = new NoteTypeFieldValue(noteTypeFieldDefinitionId, noteValue);
+                newValue = new NoteFieldValue(noteTypeFieldDefinitionId, noteValue);
                 _noteValues.Add(newValue);
             } else if (context == null) {
                 throw new ArgumentNullException(nameof(context), $"You must provide a context if the the '{nameof(NoteValues)}' collection isn't valid");
             } else if (context.Entry(this).IsKeySet) {
-                newValue = new NoteTypeFieldValue(noteTypeFieldDefinitionId, noteValue, NoteID);
+                newValue = new NoteFieldValue(noteTypeFieldDefinitionId, noteValue, NoteID);
                 context.Add(newValue);
             } else {
                 throw new InvalidOperationException("Could not add a new Note Type Value");
@@ -59,7 +59,7 @@ namespace Oboete.Database.Entity
             return newValue;
         }
 
-        public void RemoveNoteValue(NoteTypeFieldValue value, DbContext context = null)
+        public void RemoveValue(NoteFieldValue value, DbContext context = null)
         {
             if (_noteValues != null)
                 _noteValues.Remove(value);
@@ -101,6 +101,8 @@ namespace Oboete.Database.Entity
             else
                 throw new InvalidOperationException("Could not remove a new Note Type Value");
         }
+
+        public void UpdateDeckID(int newDeck) => DeckID = newDeck;
 
         #endregion
     }
