@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Oboete.Database;
+using Oboete.Logic;
+using Oboete.Web.API;
+using System.Text;
 
 namespace Oboete.Web
 {
@@ -27,16 +26,35 @@ namespace Oboete.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<OboeteContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OboeteDB")));
+            var connectionString = Configuration.GetConnectionString("OboeteDB");
+            services.AddDbContext<OboeteContext>(options => options.UseSqlServer(connectionString));
+            
+            // Setup Logic Layer Config
+            Config.ConnectionString = connectionString;
+            Config.SecretKey = Configuration["SecretKey"];
+            Config.Issuer = Configuration["Issuer"];
+            Config.Audience = Configuration["Audience"];
+            Config.GlobalHashSalt = Configuration["PasswordSalt"];
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            services.AddAuthentication(JwtAuthenticationOptions.DefaultScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters {
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config.SecretKey)),
+                        RequireSignedTokens = true,
 
-            Logic.Config.ConnectionString = Configuration.GetConnectionString("OboeteDB");
+                        RequireExpirationTime = true,
+                        ValidateLifetime = true,
+
+                        ValidateAudience = true,
+                        ValidAudience = Config.Audience,
+
+                        ValidateIssuer = true,
+                        ValidIssuer = Config.Issuer
+                    };
+                })
+                .UseCustomJwtAuthentication(o => { });
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -58,6 +76,7 @@ namespace Oboete.Web
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

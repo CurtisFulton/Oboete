@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Core", "Oboete.Core\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Test", "Oboete.Test\Oboete.Test.csproj", "{FB2EF42B-5916-4101-9A31-FD2F0FF8F61A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oboete.web", "Oboete.Web\oboete.web.csproj", "{8C3C2ACD-6B3C-47AA-A746-044D64F8589C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oboete.Web", "Oboete.Web\Oboete.Web.csproj", "{8C3C2ACD-6B3C-47AA-A746-044D64F8589C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

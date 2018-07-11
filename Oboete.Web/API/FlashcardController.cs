@@ -1,22 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Oboete.Database;
 using Oboete.Database.Entity;
-using Oboete.Logic;
 
 namespace Oboete.Web.API
 {
-    [Route("api/[controller]")]
+    [Route("API/[controller]")]
+    [Authorize]
     public class FlashcardController : ControllerBase<Flashcard>
     {
         public FlashcardController(OboeteContext context) : base(context) { }
 
-        
+        [HttpGet("[action]")]
+        public IActionResult Test()
+        {
+            var test = HttpContext.User;
+
+            return Ok("Logged in");
+        }
     }
 }
